@@ -29,6 +29,9 @@ namespace BDs
 
             services.AddDbContext<LojaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddOpenApiDocument(document =>
+                document.PostProcess = d => d.Info.Title = "Loja API");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +60,9 @@ namespace BDs
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }
